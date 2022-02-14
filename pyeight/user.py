@@ -13,7 +13,7 @@ from datetime import timedelta
 import statistics
 import time
 
-from pyeight.constants import (API_URL)
+from pyeight.constants import (CLIENT_URL)
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -724,7 +724,7 @@ class EightUser(object):
 
     async def set_heating_level(self, level, duration=0):
         """Update heating data json."""
-        url = '{}/devices/{}'.format(API_URL, self.device.deviceid)
+        url = '{}/devices/{}'.format(CLIENT_URL, self.device.deviceid)
 
         # Catch bad low inputs
         if self.device.is_pod:
@@ -761,7 +761,7 @@ class EightUser(object):
 
     async def update_user_profile(self):
         """Update user profile data."""
-        url = '{}/users/{}'.format(API_URL, self.userid)
+        url = '{}/users/{}'.format(CLIENT_URL, self.userid)
         profile_data = await self.device.api_get(url)
         if profile_data is None:
             _LOGGER.error('Unable to fetch user profile data for %s', self.userid)
@@ -770,7 +770,7 @@ class EightUser(object):
 
     async def update_trend_data(self, startdate, enddate):
         """Update trends data json for specified time period."""
-        url = '{}/users/{}/trends'.format(API_URL, self.userid)
+        url = '{}/users/{}/trends'.format(CLIENT_URL, self.userid)
         params = {
             'tz': self.device.tzone,
             'from': startdate,
@@ -786,7 +786,7 @@ class EightUser(object):
 
     async def update_intervals_data(self):
         """Update intervals data json for specified time period."""
-        url = '{}/users/{}/intervals'.format(API_URL, self.userid)
+        url = '{}/users/{}/intervals'.format(CLIENT_URL, self.userid)
 
         intervals = await self.device.api_get(url)
         if intervals is None:
